@@ -10,6 +10,7 @@ INSTALL
 SCREENSHOTS
 -----------
 
+![Widget in action](http://ceksblog.s3.amazonaws.com/bgw.png)
 
 TODO
 ----
