@@ -2,7 +2,7 @@
 /*
 Plugin Name: Better GitHub Widget
 Plugin URI: http://github.com/fracek/better-github-widget
-Description: Display your GitHub's projects
+Description: Display your GitHub projects
 Author: Francesco Ceccon
 Version: 0.1
 Author URI: http://francesco-cek.com
@@ -24,7 +24,7 @@ class Better_GitHub_Widget extends WP_Widget {
      * PHP 5 constructor
      */
     function __construct() {
-        $widget_ops = array('classname' => 'better-gh-widget', 'description' => __('Dispaly your GitHub\'s projects'));
+        $widget_ops = array('classname' => 'better-gh-widget', 'description' => __('Display your GitHub projects'));
         parent::__construct(
 	 		'better-gh-widget', // Base ID
 			'Better GitHub Widget', // Name
@@ -58,7 +58,7 @@ class Better_GitHub_Widget extends WP_Widget {
         echo $username . '</a> @ GitHub</p>';
 
         // the list of repos
-        echo '<ul id="gh_repos">';
+        echo '<ul id="gh-repos">';
         echo '<li class="loading">Status updating...</li>';
         echo '</ul>';
 ?>
@@ -70,7 +70,7 @@ class Better_GitHub_Widget extends WP_Widget {
             user: '<?php echo $username; ?>',
             count: <?php echo $count; ?>,
             skip_forks: true,
-            target: '#gh_repos'
+            target: '#gh-repos'
         });
     });
   </script>
