@@ -60,23 +60,18 @@ class Better_GitHub_Widget extends WP_Widget {
 
         // the list of repos
         echo '<ul id="gh-repos">';
-        echo '<li class="loading">Status updating...</li>';
+        echo '<li id="gh-loading">Status updating...</li>';
         echo '</ul>';
+        echo '<script src="' . plugins_url('github.js', __FILE__) . '" type="text/javascript"> </script>';
 ?>
-        <script type="text/javascript" src="<?php echo plugins_url('jq.min.js', __FILE__); ?>" />
-        </script>
 <script type="text/javascript">
-    $(document).ready(function(){
         github.showRepos({
             user: '<?php echo $username; ?>',
             count: <?php echo $count; ?>,
             skip_forks: true,
-            target: '#gh-repos'
         });
-    });
   </script>
 <?php
-        echo '<script src="' . plugins_url('github.js', __FILE__) . '" type="text/javascript"> </script>';
         echo $after_widget;
     }
 
