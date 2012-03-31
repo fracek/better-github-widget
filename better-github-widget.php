@@ -4,7 +4,7 @@ Plugin Name: Better GitHub Widget
 Plugin URI: http://github.com/fracek/better-github-widget
 Description: Display your GitHub projects
 Author: Francesco Ceccon
-Version: 0.1
+Version: 0.5
 Author URI: http://francesco-cek.com
  */
 
