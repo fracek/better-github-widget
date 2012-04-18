@@ -5,7 +5,7 @@ Author URI: http://francesco-cek.com
 Author: Francesco Ceccon
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.5
+Stable tag: 0.5.1
 
 Better GitHub Widget allows you to display your GitHub projects on your site.
 
@@ -33,6 +33,10 @@ not stress your server.
 2. The widget options
 
 == Changelog ==
+
+= 0.5.1 =
+* Add alt attribute to the octocat image
+* Fix the a tag
 
 = 0.5 =
 * First release

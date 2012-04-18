@@ -4,7 +4,7 @@ Plugin Name: Better GitHub Widget
 Plugin URI: http://github.com/fracek/better-github-widget
 Description: Display your GitHub projects
 Author: Francesco Ceccon
-Version: 0.5
+Version: 0.5.1
 Author URI: http://francesco-cek.com
  */
 
@@ -50,12 +50,12 @@ class Better_GitHub_Widget extends WP_Widget {
         echo $before_title . $title . $after_title;
 
         // Octocat image
-        echo '<img width="128px" src="' . plugins_url('octocat.png', __FILE__) . '"';
-       echo ' style="display: block; margin: 0px auto;" />';
+        echo '<img width="128px" alt="GitHub Octocat" src="' . plugins_url('octocat.png', __FILE__) . '"';
+        echo ' style="display: block; margin: 0px auto;" />';
 
         // username @ GitHub
         echo '<p style="text-align: center; ">';
-        echo '<a href="http://github.com/' . $username . '/" />';
+        echo '<a href="http://github.com/' . $username . '/" >';
         echo $username . '</a> @ GitHub</p>';
 
         // the list of repos
