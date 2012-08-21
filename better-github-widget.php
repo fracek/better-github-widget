@@ -4,12 +4,13 @@ Plugin Name: Better GitHub Widget
 Plugin URI: http://github.com/fracek/better-github-widget
 Description: Display your GitHub projects
 Author: Francesco Ceccon
-Version: 0.5.1
+Version: 0.5.2
 Author URI: http://francesco-cek.com
  */
 
 /**
- * Adds Foo_Widget widget.
+ * A better Github widget that displays a list of your most recent
+ * active Github projects
  */
 class Better_GitHub_Widget extends WP_Widget {
 
@@ -44,7 +45,7 @@ class Better_GitHub_Widget extends WP_Widget {
         extract($args);
         $username = $instance['username'];
         $count = $instance['count'];
-        $title = 'GitHub';
+        $title = $instance['title'];
 
         echo $before_widget;
         echo $before_title . $title . $after_title;
@@ -89,6 +90,7 @@ class Better_GitHub_Widget extends WP_Widget {
         $instance = array();
         $instance['username'] = strip_tags($new_instance['username']);
         $instance['count'] = strip_tags($new_instance['count']);
+        $instance['title'] = strip_tags($new_instance['title']);
  
         return $instance;
     }
@@ -102,24 +104,32 @@ class Better_GitHub_Widget extends WP_Widget {
      */
     public function form( $instance ) {
         //  Assigns values
-        $instance = wp_parse_args( (array) $instance, array( 'username' => '', 'count' => ''));
+        $instance = wp_parse_args( (array) $instance, array( 'username' => '', 'count' => '', 'title' => 'Github'));
         $username = strip_tags($instance['username']);
         $count = strip_tags($instance['count']);
+        $title = strip_tags($instance['title']);
         
+
+        echo '<p><label for="'. $this->get_field_id('title') . '">' . __('title') . ':';
+        echo '<input class="widefat" id="' . $this->get_field_id('title') . '" ';
+        echo 'name="' . $this->get_field_name('title') . '" type="text" ';
+        echo 'value="' . attribute_escape($title) . '" title="Title of the widget as it appears on the page" />';
+        echo '</label></p>';
+
         echo '<p><label for="'. $this->get_field_id('username') . '">' . __('Username') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('username') . '" ';
         echo 'name="' . $this->get_field_name('username') . '" type="text" ';
-        echo 'value="' . attribute_escape($username) . '" />';
+        echo 'value="' . attribute_escape($username) . '" title="Your Github username"/>';
         echo '</label></p>';
 
         echo '<p><label for="' . $this->get_field_id('count') . '">' . __('Number of projects to show') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('count') . '" ';
         echo 'name="' . $this->get_field_name('count') . '" type="number" ';
-        echo 'value="' . attribute_escape($count) . '" />';
+        echo 'value="' . attribute_escape($count) . '" title="0 for all." />';
         echo '<br><small>' . __('Set to 0 to display all your projects</small>');
         echo '</label></p>';
     }
 
-} // class Foo_Widget
+} // class Better_GitHub_Widget
 add_action( 'widgets_init', create_function( '', 'register_widget( "better_github_widget" );' ) );
 ?>
