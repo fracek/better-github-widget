@@ -104,7 +104,8 @@ class Better_GitHub_Widget extends WP_Widget {
      */
     public function form( $instance ) {
         //  Assigns values
-        $instance = wp_parse_args( (array) $instance, array( 'username' => '', 'count' => '', 'title' => 'Github'));
+        $instance = wp_parse_args( (array) $instance, array( 'username' => '',
+            'count' => '', 'title' => 'GitHub'));
         $username = strip_tags($instance['username']);
         $count = strip_tags($instance['count']);
         $title = strip_tags($instance['title']);
