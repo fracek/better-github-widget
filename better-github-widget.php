@@ -46,6 +46,7 @@ class Better_GitHub_Widget extends WP_Widget {
         $username = $instance['username'];
         $count = $instance['count'];
         $title = $instance['title'];
+        $skip_forks = ($instance['skip_forks']) ? 'false' : 'true';
 
         echo $before_widget;
         echo $before_title . $title . $after_title;
@@ -69,7 +70,7 @@ class Better_GitHub_Widget extends WP_Widget {
         github.showRepos({
             user: '<?php echo $username; ?>',
             count: <?php echo $count; ?>,
-            skip_forks: true,
+            skip_forks: <?php echo $skip_forks; ?>,
         });
   </script>
 <?php
@@ -91,7 +92,7 @@ class Better_GitHub_Widget extends WP_Widget {
         $instance['username'] = strip_tags($new_instance['username']);
         $instance['count'] = strip_tags($new_instance['count']);
         $instance['title'] = strip_tags($new_instance['title']);
- 
+        $instance['skip_forks'] = strip_tags($new_instance['skip_forks']);
         return $instance;
     }
 
@@ -109,7 +110,8 @@ class Better_GitHub_Widget extends WP_Widget {
         $username = strip_tags($instance['username']);
         $count = strip_tags($instance['count']);
         $title = strip_tags($instance['title']);
-        
+        $skip_forks = strip_tags($instance['skip_forks']);
+        $checked = ( $skip_forks ) ? 'checked="checked"' : '';
 
         echo '<p><label for="'. $this->get_field_id('title') . '">' . __('title') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('title') . '" ';
@@ -129,6 +131,10 @@ class Better_GitHub_Widget extends WP_Widget {
         echo 'value="' . attribute_escape($count) . '" title="0 for all." />';
         echo '<br><small>' . __('Set to 0 to display all your projects</small>');
         echo '</label></p>';
+
+        echo '<p><label for="' . $this->get_field_id('skip_forks') . '">' .  __('Show Forked Repositories: ') . '</label>';
+        echo '<input type="checkbox" name="' . $this->get_field_name('skip_forks') . '" value="1" ' . $checked . '/>'; 
+        echo '</p>';
     }
 
 } // class Better_GitHub_Widget
