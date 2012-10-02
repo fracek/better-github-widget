@@ -1,11 +1,11 @@
 === Better GitHub Widget ===
-Contributors: fracek, gavD
+Contributors: fracek, gavD, jowilki
 Tags: github, project
 Author URI: http://francesco-cek.com
 Author: Francesco Ceccon
 Requires at least: 3.0
 Tested up to: 3.3.1
-Stable tag: 0.5.2
+Stable tag: 0.5.3
 
 Better GitHub Widget allows you to display your GitHub projects on your site.
 
@@ -25,7 +25,8 @@ not stress your server.
 1. Upload the contents of the zip (including the folder) to the 
 '/wp-content/plugins/' directory
 2. Activate the plugin through the 'Plugins' menu in WordPress
-3. Place the widget to a widget area and set your GitHub username
+3. Under Appearance > Widgets you will see the "Better Github Widget". Drag it to your sidebar and place it where you want it to appear.
+4. Add your Github username and configure the default settings (the number of projects to display and whether to show forked repositories)
 
 == Screenshots ==
 
@@ -33,6 +34,9 @@ not stress your server.
 2. The widget options
 
 == Changelog ==
+
+= 0.5.3 =
+* Add option to show forked repos
 
 = 0.5.2 =
 * Add option to modify the title of the widget
