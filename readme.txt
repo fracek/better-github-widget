@@ -1,5 +1,5 @@
 === Better GitHub Widget ===
-Contributors: fracek, gavD, jowilki
+Contributors: fracek, gavD, jowilki, cfoellmann
 Tags: github, project
 Author URI: http://francesco-cek.com
 Author: Francesco Ceccon
