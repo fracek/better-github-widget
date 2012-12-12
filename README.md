@@ -2,7 +2,9 @@ Better GitHub Widget
 ====================
 
 A Wordpress widget to display your GitHub projects, it asks only for your
-username.
+username. [Better GitHub Widget@WordPress.org](https://wordpress.org/extend/plugins/better-github-widget/)
+
+Translate at [https://translate.foe-services.de/projects/better-github-widget](https://translate.foe-services.de/projects/better-github-widget)
 
 INSTALL
 -------
