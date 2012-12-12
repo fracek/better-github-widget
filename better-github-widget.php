@@ -9,7 +9,7 @@ Author URI: http://francesco-cek.com
  */
 
 $plugin_dir = basename(dirname(__FILE__));
-load_plugin_textdomain( 'bg-wgt', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+load_plugin_textdomain( 'better-github-widget', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 /**
  * A better Github widget that displays a list of your most recent
@@ -28,7 +28,7 @@ class Better_GitHub_Widget extends WP_Widget {
      * PHP 5 constructor
      */
     function __construct() {
-        $widget_ops = array('classname' => 'better-gh-widget', 'description' => __('Display your GitHub projects','bg-wgt'));
+        $widget_ops = array('classname' => 'better-gh-widget', 'description' => __('Display your GitHub projects','better-github-widget'));
         parent::__construct(
 	 		'better-gh-widget', // Base ID
 			'Better GitHub Widget', // Name
@@ -65,7 +65,7 @@ class Better_GitHub_Widget extends WP_Widget {
 
         // the list of repos
         echo '<ul id="gh-repos">';
-        echo '<li id="gh-loading">' . __('Status updating...','bg-wgt') . '</li>';
+        echo '<li id="gh-loading">' . __('Status updating...','better-github-widget') . '</li>';
         echo '</ul>';
         echo '<script src="' . plugins_url('github.js', __FILE__) . '" type="text/javascript"> </script>';
 ?>
@@ -116,26 +116,26 @@ class Better_GitHub_Widget extends WP_Widget {
         $skip_forks = strip_tags($instance['skip_forks']);
         $checked = ( $skip_forks ) ? 'checked="checked"' : '';
 
-        echo '<p><label for="'. $this->get_field_id('title') . '">' . __('Title','bg-wgt') . ':';
+        echo '<p><label for="'. $this->get_field_id('title') . '">' . __('Title','better-github-widget') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('title') . '" ';
         echo 'name="' . $this->get_field_name('title') . '" type="text" ';
-        echo 'value="' . esc_attr($title) . '" title="' . __('Title of the widget as it appears on the page','bg-wgt') . '" />';
+        echo 'value="' . esc_attr($title) . '" title="' . __('Title of the widget as it appears on the page','better-github-widget') . '" />';
         echo '</label></p>';
 
-        echo '<p><label for="'. $this->get_field_id('username') . '">' . __('Username','bg-wgt') . ':';
+        echo '<p><label for="'. $this->get_field_id('username') . '">' . __('Username','better-github-widget') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('username') . '" ';
         echo 'name="' . $this->get_field_name('username') . '" type="text" ';
-        echo 'value="' . esc_attr($username) . '" title="' . __('Your Github username','bg-wgt') . '"/>';
+        echo 'value="' . esc_attr($username) . '" title="' . __('Your Github username','better-github-widget') . '"/>';
         echo '</label></p>';
 
-        echo '<p><label for="' . $this->get_field_id('count') . '">' . __('Number of projects to show','bg-wgt') . ':';
+        echo '<p><label for="' . $this->get_field_id('count') . '">' . __('Number of projects to show','better-github-widget') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('count') . '" ';
         echo 'name="' . $this->get_field_name('count') . '" type="number" ';
         echo 'value="' . esc_attr($count) . '" title="0 for all." />';
-        echo '<br><small>' . __('Set to 0 to display all your projects','bg-wgt') . '</small>';
+        echo '<br><small>' . __('Set to 0 to display all your projects','better-github-widget') . '</small>';
         echo '</label></p>';
 
-        echo '<p><label for="' . $this->get_field_id('skip_forks') . '">' .  __('Show Forked Repositories:','bg-wgt') . ' </label>';
+        echo '<p><label for="' . $this->get_field_id('skip_forks') . '">' .  __('Show Forked Repositories:','better-github-widget') . ' </label>';
         echo '<input type="checkbox" name="' . $this->get_field_name('skip_forks') . '" value="1" ' . $checked . '/>'; 
         echo '</p>';
     }
