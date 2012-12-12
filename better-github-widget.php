@@ -9,7 +9,8 @@ Author URI: http://francesco-cek.com
  */
 
 $plugin_dir = basename(dirname(__FILE__));
-load_plugin_textdomain( 'better-github-widget', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+load_plugin_textdomain( 'better-github-widget', false,
+    dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 /**
  * A better Github widget that displays a list of your most recent
@@ -28,12 +29,13 @@ class Better_GitHub_Widget extends WP_Widget {
      * PHP 5 constructor
      */
     function __construct() {
-        $widget_ops = array('classname' => 'better-gh-widget', 'description' => __('Display your GitHub projects','better-github-widget'));
+        $widget_ops = array('classname' => 'better-gh-widget',
+            'description' => __('Display your GitHub projects','better-github-widget'));
         parent::__construct(
-	 		'better-gh-widget', // Base ID
-			'Better GitHub Widget', // Name
+            'better-gh-widget', // Base ID
+            'Better GitHub Widget', // Name
             $widget_ops
-		);
+        );
     }
 
     /**
