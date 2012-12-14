@@ -52,13 +52,16 @@ class Better_GitHub_Widget extends WP_Widget {
         $count = $instance['count'];
         $title = $instance['title'];
         $skip_forks = ($instance['skip_forks']) ? 'false' : 'true';
+        $show_octocat = $instance['show_octocat'];
 
         echo $before_widget;
         echo $before_title . $title . $after_title;
 
         // Octocat image
-        echo '<img width="128px" alt="GitHub Octocat" src="' . plugins_url('octocat.png', __FILE__) . '"';
-        echo ' style="display: block; margin: 0px auto;" />';
+        if ($show_octocat) {
+            echo '<img width="128px" alt="GitHub Octocat" src="' . plugins_url('octocat.png', __FILE__) . '"';
+            echo ' style="display: block; margin: 0px auto;" />';
+        }
 
         // username @ GitHub
         echo '<p style="text-align: center; ">';
@@ -98,6 +101,7 @@ class Better_GitHub_Widget extends WP_Widget {
         $instance['count'] = strip_tags($new_instance['count']);
         $instance['title'] = strip_tags($new_instance['title']);
         $instance['skip_forks'] = strip_tags($new_instance['skip_forks']);
+        $instance['show_octocat'] = strip_tags($new_instance['show_octocat']);
         return $instance;
     }
 
@@ -110,35 +114,60 @@ class Better_GitHub_Widget extends WP_Widget {
      */
     public function form( $instance ) {
         //  Assigns values
-        $instance = wp_parse_args( (array) $instance, array( 'username' => '',
-            'count' => '', 'title' => 'GitHub'));
+        $defaults = array(
+            'username' => '',
+            'count' => '0',
+            'title' => 'GitHub',
+            'show_octocat' => 'true'
+        );
+        $instance = wp_parse_args( (array) $instance, $defaults);
         $username = strip_tags($instance['username']);
         $count = strip_tags($instance['count']);
         $title = strip_tags($instance['title']);
         $skip_forks = strip_tags($instance['skip_forks']);
-        $checked = ( $skip_forks ) ? 'checked="checked"' : '';
+        $skip_forks_checked = ($skip_forks) ? 'checked="checked"' : '';
+        $show_octocat = strip_tags($instance['show_octocat']);
+        $show_octocat_checked = ($show_octocat) ? 'checked="checked"' : '';
 
-        echo '<p><label for="'. $this->get_field_id('title') . '">' . __('Title','better-github-widget') . ':';
+        // Title
+        echo '<p><label for="'. $this->get_field_id('title') . '">' .
+            __('Title','better-github-widget') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('title') . '" ';
         echo 'name="' . $this->get_field_name('title') . '" type="text" ';
-        echo 'value="' . esc_attr($title) . '" title="' . __('Title of the widget as it appears on the page','better-github-widget') . '" />';
+        echo 'value="' . esc_attr($title) . '" title="' .
+            __('Title of the widget as it appears on the page','better-github-widget') . '" />';
         echo '</label></p>';
 
-        echo '<p><label for="'. $this->get_field_id('username') . '">' . __('Username','better-github-widget') . ':';
+        // Username
+        echo '<p><label for="'. $this->get_field_id('username') . '">' .
+            __('Username','better-github-widget') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('username') . '" ';
         echo 'name="' . $this->get_field_name('username') . '" type="text" ';
-        echo 'value="' . esc_attr($username) . '" title="' . __('Your Github username','better-github-widget') . '"/>';
+        echo 'value="' . esc_attr($username) . '" title="' .
+            __('Your Github username','better-github-widget') . '"/>';
         echo '</label></p>';
 
-        echo '<p><label for="' . $this->get_field_id('count') . '">' . __('Number of projects to show','better-github-widget') . ':';
+        // Repo Count
+        echo '<p><label for="' . $this->get_field_id('count') . '">' .
+            __('Number of projects to show','better-github-widget') . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('count') . '" ';
         echo 'name="' . $this->get_field_name('count') . '" type="number" ';
         echo 'value="' . esc_attr($count) . '" title="0 for all." />';
         echo '<br><small>' . __('Set to 0 to display all your projects','better-github-widget') . '</small>';
         echo '</label></p>';
 
-        echo '<p><label for="' . $this->get_field_id('skip_forks') . '">' .  __('Show Forked Repositories:','better-github-widget') . ' </label>';
-        echo '<input type="checkbox" name="' . $this->get_field_name('skip_forks') . '" value="1" ' . $checked . '/>'; 
+        // Skip Forks
+        echo '<p><label for="' . $this->get_field_id('skip_forks') . '">' .
+            __('Show Forked Repositories:','better-github-widget') . ' </label>';
+        echo '<input type="checkbox" name="' . $this->get_field_name('skip_forks') .
+            '" value="1" ' . $skip_forks_checked . '/>'; 
+        echo '</p>';
+
+        // Show Octocat
+        echo '<p><label for="' . $this->get_field_id('show_octocat') . '">' .
+            __('Show Octocat:','better-github-widget') . ' </label>';
+        echo '<input type="checkbox" name="' . $this->get_field_name('show_octocat') .
+            '" value="1" ' . $show_octocat_checked . '/>'; 
         echo '</p>';
     }
 
