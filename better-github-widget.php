@@ -39,6 +39,7 @@ class Better_GitHub_Widget extends WP_Widget {
             'Better GitHub Widget', // Name
             $widget_ops
         );
+        add_action('wp_ajax_bgw_update_order', array(&$this, 'update_order')); 
     }
 
     /**
@@ -71,20 +72,7 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '<a href="http://github.com/' . $username . '/" >';
         echo $username . '</a> @ GitHub</p>';
 
-        // the list of repos
-        echo '<ul id="gh-repos">';
-        echo '<li id="gh-loading">' . __('Status updating...','better-github-widget') . '</li>';
-        echo '</ul>';
-        echo '<script src="' . plugins_url('github.js', __FILE__) . '" type="text/javascript"> </script>';
-?>
-<script type="text/javascript">
-        github.showRepos({
-            user: '<?php echo $username; ?>',
-            count: <?php echo $count; ?>,
-            skip_forks: <?php echo $skip_forks; ?>,
-        });
-  </script>
-<?php
+        $this->display_repos($username, $count, $skip_forks);
         echo $after_widget;
     }
 
@@ -132,6 +120,10 @@ class Better_GitHub_Widget extends WP_Widget {
         $show_octocat = strip_tags($instance['show_octocat']);
         $show_octocat_checked = ($show_octocat) ? 'checked="checked"' : '';
 
+        wp_enqueue_script('jquery-ui-sortable');
+        wp_enqueue_script('section-order', plugins_url('js/section-order.js', __FILE__));
+        wp_enqueue_style('section-order-style', plugins_url('css/section-order.css', __FILE__));
+
         // Title
         echo '<p><label for="'. $this->get_field_id('title') . '">' .
             __('Title','better-github-widget') . ':';
@@ -172,6 +164,51 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '<input type="checkbox" name="' . $this->get_field_name('show_octocat') .
             '" value="1" ' . $show_octocat_checked . '/>'; 
         echo '</p>';
+
+        echo '<p><label for="' . '">' . __('Diplay order:','better-github-widget') .
+            '</label>';
+        echo '<div class="bgw-sections-order"><table class="wp-list-table widefat">';
+        echo '<thead><tr>';
+        echo '<th>Section</th><th>Display</th>';
+        echo '</tr></thead>';
+        echo '<tbody>';
+        echo '<tr id="section_0" class="list_item"><td>Repository</td><td>' .
+            '<input type="checkbox" checked="checked"></input>' .
+            '</td></tr>';
+        echo '<tr id="section_1" class="list_item"><td>Activity</td><td>' .
+            '<input type="checkbox" checked="checked"></input>' .
+            '</td></tr>';
+        echo '</tbody>';
+        echo '</table></div>';
+    }
+
+    /**
+     * Outputs the html content of the repository list
+     *
+     * @param string $username the user username
+     * @param string $count how many repositories to show
+     * @param string $skip_forks don't show forks?
+     */
+    private function display_repos($username, $count, $skip_forks) {
+        // the list of repos
+        echo '<ul id="gh-repos">';
+        echo '<li id="gh-loading">' . __('Status updating...','better-github-widget') . '</li>';
+        echo '</ul>';
+        echo '<script src="' . plugins_url('js/github.js', __FILE__) . '" type="text/javascript"> </script>';
+?>
+<script type="text/javascript">
+        github.showRepos({
+            user: '<?php echo $username; ?>',
+            count: <?php echo $count; ?>,
+            skip_forks: <?php echo $skip_forks; ?>,
+        });
+  </script>
+<?php
+    }
+
+    public function update_order() {
+        print_r($_POST);
+        die();
     }
 
 } // class Better_GitHub_Widget
