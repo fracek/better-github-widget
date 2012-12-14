@@ -4,7 +4,7 @@ Tags: github, project
 Author URI: http://francesco-cek.com
 Author: Francesco Ceccon
 Requires at least: 3.0
-Tested up to: 3.3.1
+Tested up to: 3.5
 Stable tag: 0.6.1
 
 Better GitHub Widget allows you to display your GitHub projects on your site.
@@ -19,6 +19,9 @@ GitHub projects, it simply blends with your theme.
 All of the magic of this widget happens on the user's browser, so it does
 not stress your server.
 
+= Development =
+Contribute Code at [https://github.com/fracek/better-github-widget](https://github.com/fracek/better-github-widget)
+Contribute Translations at [https://translate.foe-services.de/projects/better-github-widget](https://translate.foe-services.de/projects/better-github-widget)
 
 == Installation ==
 
