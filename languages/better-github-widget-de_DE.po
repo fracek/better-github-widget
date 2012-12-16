@@ -42,6 +42,6 @@ msgstr "Setze 0 ein um alle Projekte anzuzeigen"
 msgid "Show Forked Repositories:"
 msgstr "Forked Repositories anzeigen:"
 
-#: better-github-widget.php:28
+#: better-github-widget.php:5 better-github-widget.php:28
 msgid "Display your GitHub projects"
 msgstr "Zeige deine GitHub Projekte an"

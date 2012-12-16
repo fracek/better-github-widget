@@ -6,6 +6,9 @@ Description: Display your GitHub projects
 Author: Francesco Ceccon
 Version: 0.6.1
 Author URI: http://francesco-cek.com
+ 
+Text Domain:   better-github-widget
+Domain Path:   /languages/
  */
 
 $plugin_dir = basename(dirname(__FILE__));
