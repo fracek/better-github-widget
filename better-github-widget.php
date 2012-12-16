@@ -21,6 +21,11 @@ load_plugin_textdomain( 'better-github-widget', false,
  */
 class Better_GitHub_Widget extends WP_Widget {
 
+    private $sections = array(
+        'Repositories',
+        'Activity'
+    );
+
     /**
      * PHP 4 constructor
      */
@@ -109,7 +114,9 @@ class Better_GitHub_Widget extends WP_Widget {
             'username' => '',
             'count' => '0',
             'title' => 'GitHub',
-            'show_octocat' => 'true'
+            'skip_forks' => 'false',
+            'show_octocat' => 'true',
+            'sections_order' => $this->sections
         );
         $instance = wp_parse_args( (array) $instance, $defaults);
         $username = strip_tags($instance['username']);
@@ -119,9 +126,13 @@ class Better_GitHub_Widget extends WP_Widget {
         $skip_forks_checked = ($skip_forks) ? 'checked="checked"' : '';
         $show_octocat = strip_tags($instance['show_octocat']);
         $show_octocat_checked = ($show_octocat) ? 'checked="checked"' : '';
+        $sections = $instance['sections_order'];
 
         wp_enqueue_script('jquery-ui-sortable');
         wp_enqueue_script('section-order', plugins_url('js/section-order.js', __FILE__));
+        wp_localize_script('section-order', 'SectionOrder', array(
+            'nonce' => wp_create_nonce('section-order-nonce')
+        ));
         wp_enqueue_style('section-order-style', plugins_url('css/section-order.css', __FILE__));
 
         // Title
@@ -172,12 +183,11 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '<th>Section</th><th>Display</th>';
         echo '</tr></thead>';
         echo '<tbody>';
-        echo '<tr id="section_0" class="list_item"><td>Repository</td><td>' .
-            '<input type="checkbox" checked="checked"></input>' .
-            '</td></tr>';
-        echo '<tr id="section_1" class="list_item"><td>Activity</td><td>' .
-            '<input type="checkbox" checked="checked"></input>' .
-            '</td></tr>';
+        foreach($sections as $k => $section) {
+            echo '<tr id="section_'.$k.'" class="list_item"><td>'.$section.'</td><td>' .
+                '<input type="checkbox" checked="checked"></input>' .
+                '</td></tr>';
+        }
         echo '</tbody>';
         echo '</table></div>';
     }
@@ -207,7 +217,20 @@ class Better_GitHub_Widget extends WP_Widget {
     }
 
     public function update_order() {
-        print_r($_POST);
+        if (!is_admin()) die('Not an admin');
+        if (!isset($_REQUEST['nonce']) ||
+            !wp_verify_nonce($_REQUEST['nonce'], 'section-order-nonce')) 
+            die('Invalid Nonce');
+        $sections = $this->sections;
+        $new_order = $_POST['section'];
+        $new_sections = array();
+
+        foreach($new_order as $v) {
+            if (isset($sections[$v])) {
+                $new_sections[$v] = $sections[$v];
+            }
+        }
+        // FIXME: save the new order
         die();
     }
 

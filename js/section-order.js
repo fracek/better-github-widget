@@ -4,7 +4,8 @@ jQuery(document).ready(function($) {
     cursor: 'move',
     axis: 'y',
     update: function() {
-      var order = $(this).sortable('serialize') + '&action=bgw_update_order';
+      var order = $(this).sortable('serialize') +
+          '&action=bgw_update_order&nonce=' + SectionOrder.nonce;
       $.post(ajaxurl, order, function(response) {
         console.log(response);
       });
