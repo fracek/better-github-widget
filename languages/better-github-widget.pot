@@ -16,7 +16,7 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: better-github-widget.php:28
+#: better-github-widget.php:5 better-github-widget.php:28
 msgid "Display your GitHub projects"
 msgstr ""
 
