@@ -180,7 +180,8 @@ class Better_GitHub_Widget extends WP_Widget {
         if ($file == $plugin) {
             return array_merge(
                 $links,
-                array('<a href="https://github.com/fracek/better-github-widget/issues">Issues on GitHub</a>')
+                array(sprintf('<a href="https://github.com/fracek/better-github-widget/issues">%s</a>',
+                    __('Issues on GitHub','better-github-widget')))
             );
         }
         return $links;
