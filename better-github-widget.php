@@ -39,6 +39,7 @@ class Better_GitHub_Widget extends WP_Widget {
             'Better GitHub Widget', // Name
             $widget_ops
         );
+        add_filter('plugin_row_meta', array(&$this, 'set_plugin_meta'), 10, 2);
     }
 
     /**
@@ -174,6 +175,16 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '</p>';
     }
 
+    function set_plugin_meta($links, $file) {
+        $plugin = plugin_basename(__FILE__);
+        if ($file == $plugin) {
+            return array_merge(
+                $links,
+                array('<a href="https://github.com/fracek/better-github-widget/issues">Issues on GitHub</a>')
+            );
+        }
+        return $links;
+    }
 } // class Better_GitHub_Widget
-add_action( 'widgets_init', create_function( '', 'register_widget( "better_github_widget" );' ) );
+add_action('widgets_init', create_function('', 'register_widget("better_github_widget");'));
 ?>
