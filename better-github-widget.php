@@ -62,6 +62,7 @@ class Better_GitHub_Widget extends WP_Widget {
         $title = $instance['title'];
         $skip_forks = ($instance['skip_forks']) ? 'false' : 'true';
         $show_octocat = $instance['show_octocat'];
+        $sections = $this->sections;
 
         echo $before_widget;
         echo $before_title . $title . $after_title;
@@ -77,7 +78,13 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '<a href="http://github.com/' . $username . '/" >';
         echo $username . '</a> @ GitHub</p>';
 
-        $this->display_repos($username, $count, $skip_forks);
+        echo '<script src="' . plugins_url('js/github.js', __FILE__) . '" type="text/javascript"> </script>';
+        foreach($sections as $section) {
+            if ($section == 'Repositories')
+                $this->display_repos($username, $count, $skip_forks);
+            else if ($section == 'Activity')
+                $this->display_activity($username);
+        }
         echo $after_widget;
     }
 
@@ -200,17 +207,30 @@ class Better_GitHub_Widget extends WP_Widget {
      * @param string $skip_forks don't show forks?
      */
     private function display_repos($username, $count, $skip_forks) {
-        // the list of repos
+        echo '<h4>' . __('Repositories','better-github-widget') . '</h4>';
         echo '<ul id="gh-repos">';
         echo '<li id="gh-loading">' . __('Status updating...','better-github-widget') . '</li>';
         echo '</ul>';
-        echo '<script src="' . plugins_url('js/github.js', __FILE__) . '" type="text/javascript"> </script>';
 ?>
 <script type="text/javascript">
         github.showRepos({
             user: '<?php echo $username; ?>',
             count: <?php echo $count; ?>,
             skip_forks: <?php echo $skip_forks; ?>,
+        });
+  </script>
+<?php
+    }
+
+    private function display_activity($username) {
+        echo '<h4>' . __('Activity','better-github-widget') . '</h4>';
+        echo '<ul id="gh-activity">';
+        echo '<li id="gh-loading">' . __('Status updating...','better-github-widget') . '</li>';
+        echo '</ul>';
+?>
+<script type="text/javascript">
+        github.showActivity({
+            user: '<?php echo $username; ?>',
         });
   </script>
 <?php

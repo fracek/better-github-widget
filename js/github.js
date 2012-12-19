@@ -34,7 +34,7 @@ var github = (function(){
       }
       render(repos);
     },
-    showRepos: function(options){
+    showRepos: function(options) {
       var req = "https://api.github.com/users/"+options.user+"/repos?callback=github.parseResult";
       var head = document.getElementsByTagName("head").item(0);
       var script = document.createElement("script");
@@ -42,6 +42,8 @@ var github = (function(){
       script.setAttribute("type", "text/javascript");
       script.setAttribute("src", req);
       head.appendChild(script);   
+    },
+    showActivity: function(options) {
     }
   };
 })();
