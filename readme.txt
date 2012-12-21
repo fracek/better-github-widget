@@ -1,5 +1,5 @@
 === Better GitHub Widget ===
-Contributors: fracek, gavD, jowilki, foe-services-labs
+Contributors: fracek, gavD, jowilki, Foe Services Labs
 Tags: github, project
 Author URI: http://francesco-cek.com
 Author: Francesco Ceccon
@@ -20,8 +20,8 @@ All of the magic of this widget happens on the user's browser, so it does
 not stress your server.
 
 = Development =
-Contribute Code at [https://github.com/fracek/better-github-widget](https://github.com/fracek/better-github-widget)
-Contribute Translations at [https://translate.foe-services.de/projects/better-github-widget](https://translate.foe-services.de/projects/better-github-widget)
+* Contribute Code at [https://github.com/fracek/better-github-widget](https://github.com/fracek/better-github-widget)
+* Contribute Translations at [https://translate.foe-services.de/projects/better-github-widget](https://translate.foe-services.de/projects/better-github-widget)
 
 == Installation ==
 
