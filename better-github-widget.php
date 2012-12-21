@@ -6,6 +6,8 @@ Description: Display your GitHub projects
 Author: Francesco Ceccon
 Version: 0.6.1
 Author URI: http://francesco-cek.com
+License: BSD 2-clause
+License URI: https://raw.github.com/fracek/better-github-widget/master/LICENSE.txt
  
 Text Domain:   better-github-widget
 Domain Path:   /languages/
