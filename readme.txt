@@ -6,6 +6,8 @@ Author: Francesco Ceccon
 Requires at least: 3.0
 Tested up to: 3.5
 Stable tag: 0.6.1
+License: BSD 2-clause
+License URI: https://raw.github.com/fracek/better-github-widget/master/LICENSE.txt
 
 Better GitHub Widget allows you to display your GitHub projects on your site.
 
