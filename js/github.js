@@ -1,49 +1,57 @@
-var github = (function(){
-  function render(repos){
-    var i = 0, fragment = '';
-    var t = document.getElementById('gh-repos');
-    for(i = 0; i < repos.length; i++) {
+jQuery(document).ready(function($) {
+  var renderRepos = function(repos) {
+    var fragment = '';
+    for (var i = 0; i < repos.length; i++) {
       fragment += '<li><a href="'+repos[i].html_url+'" target="_blank">'+repos[i].name+'</a><p>'+repos[i].description+'</p></li>';
     }
-    t.innerHTML = fragment;
+    $('#gh-repos').html(fragment);
   }
 
-  return {
-    options: {},
-    parseResult: function(result) {
-      if (!result || !result.data) {
-        return;
+  var renderActivity = function(activity) {
+    var actions = {
+      'PushEvent': function(a) {
+        return 'Pushed to ' + a.repo.name;
+      },
+      'WatchEvent': function(a) {
+        return 'Starred ' + a.repo.name;
+      },
+      'IssueCommentEvent': function(a) {
+        return 'Commented on ' + a.repo.name;
+      },
+      'IssuesEvent': function(a) {
+        return a.payload.action + ' issue ' + '<a href="'+a.payload.issue.html_url+'">'+a.repo.name;
       }
-      var data = result.data;
+    };
+    console.log(activity);
+    var fragment = '';
+    for (var i = 0; i < activity.length; i++) {
+      fragment += '<li>'+actions[activity[i].type](activity[i])+'</li>';
+    }
+    $('#gh-activity').html(fragment);
+  }
+
+  var options = BetterGitHubWidget;
+  if (options.display_repos == 'true') {
+    var url = 'https://api.github.com/users/'+options.username+'/repos?sort=updated';
+    $.getJSON(url, function(data) {
+      if (!data) return;
       var repos = [];
       for (var i = 0; i < data.length; i++) {
-        if (this.options.skip_forks && data[i].fork) {
+        if (options.skip_forks && data[i].fork)
           continue;
-        }
         repos.push(data[i]);
       }
-      repos.sort(function(a, b) {
-        var aDate = new Date(a.pushed_at).valueOf(),
-            bDate = new Date(b.pushed_at).valueOf();
-
-        if (aDate === bDate) { return 0; }
-        return aDate > bDate ? -1 : 1;
-      });
-      if (this.options.count) {
-        repos.splice(this.options.count);
-      }
-      render(repos);
-    },
-    showRepos: function(options) {
-      var req = "https://api.github.com/users/"+options.user+"/repos?callback=github.parseResult";
-      var head = document.getElementsByTagName("head").item(0);
-      var script = document.createElement("script");
-      this.options = options;
-      script.setAttribute("type", "text/javascript");
-      script.setAttribute("src", req);
-      head.appendChild(script);   
-    },
-    showActivity: function(options) {
-    }
-  };
-})();
+      if (options.count && options.count > 0)
+        repos.splice(options.count);
+      renderRepos(repos);
+    });
+  }
+  if (options.display_activity == 'true') {
+    var data = 'user='+options.username+'&action=bgw_get_activity';
+    $.post(options.ajaxurl, data, function(resp) {
+      var activity = resp;
+      activity.splice(5);
+      renderActivity(activity);
+    }, 'json');
+  }
+});

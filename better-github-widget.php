@@ -45,6 +45,7 @@ class Better_GitHub_Widget extends WP_Widget {
             $widget_ops
         );
         add_action('wp_ajax_bgw_update_order', array(&$this, 'update_order')); 
+        add_action('wp_ajax_bgw_get_activity', array(&$this, 'get_activity'));
     }
 
     /**
@@ -78,7 +79,23 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '<a href="http://github.com/' . $username . '/" >';
         echo $username . '</a> @ GitHub</p>';
 
-        echo '<script src="' . plugins_url('js/github.js', __FILE__) . '" type="text/javascript"> </script>';
+        wp_enqueue_script(
+            'better-github-script',
+            plugins_url('js/github.js', __FILE__),
+            array('jquery')
+        );
+        wp_localize_script(
+            'better-github-script',
+            'BetterGitHubWidget',
+            array(
+                'ajaxurl' => admin_url('admin-ajax.php'),
+                'username' => $username,
+                'count' => $count,
+                'skip_forks' => $skip_forks,
+                'display_repos' => 'true',
+                'display_activity' => 'true'
+            )
+        );
         foreach($sections as $section) {
             if ($section == 'Repositories')
                 $this->display_repos($username, $count, $skip_forks);
@@ -211,15 +228,6 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '<ul id="gh-repos">';
         echo '<li id="gh-loading">' . __('Status updating...','better-github-widget') . '</li>';
         echo '</ul>';
-?>
-<script type="text/javascript">
-        github.showRepos({
-            user: '<?php echo $username; ?>',
-            count: <?php echo $count; ?>,
-            skip_forks: <?php echo $skip_forks; ?>,
-        });
-  </script>
-<?php
     }
 
     private function display_activity($username) {
@@ -227,13 +235,6 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '<ul id="gh-activity">';
         echo '<li id="gh-loading">' . __('Status updating...','better-github-widget') . '</li>';
         echo '</ul>';
-?>
-<script type="text/javascript">
-        github.showActivity({
-            user: '<?php echo $username; ?>',
-        });
-  </script>
-<?php
     }
 
     public function update_order() {
@@ -254,6 +255,32 @@ class Better_GitHub_Widget extends WP_Widget {
         die();
     }
 
+    public function get_activity() {
+        error_log(print_r($_POST, 'true'));
+        if (!$_POST['user']) die();
+        $feed = null;
+        if (($feed = get_transient('bgw_activity_feed')) == false) {
+            $user = $_POST['user'];
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://api.github.com/users/$user/events");
+            curl_setopt($ch, CURLOPT_FRESH_CONNECT, TRUE);
+            curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, FALSE);
+            curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+            $resp = curl_exec($ch);
+            if (!curl_errno($ch)) {
+                // FIXME: honor the X-Poll-Interval header
+                $feed = $resp;
+                set_transient('bgw_activity_feed', $feed, 2 * MINUTE_IN_SECONDS);
+            }
+            curl_close($ch);
+
+        }
+        echo $feed;
+        die();
+    }
 } // class Better_GitHub_Widget
 add_action( 'widgets_init', create_function( '', 'register_widget( "better_github_widget" );' ) );
 ?>
