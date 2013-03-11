@@ -1,28 +1,28 @@
 <?php
 /*
-Plugin Name: Better GitHub Widget
-Plugin URI: https://wordpress.org/extend/plugins/better-github-widget/
-Description: Display your GitHub projects
-Author: Francesco Ceccon
-Version: 0.6.1
-Author URI: http://francesco-cek.com
-License: BSD 2-clause
-License URI: https://raw.github.com/fracek/better-github-widget/master/LICENSE.txt
- 
-Text Domain:   better-github-widget
-Domain Path:   /languages/
+Plugin Name:    Better GitHub Widget
+Plugin URI:     https://wordpress.org/extend/plugins/better-github-widget/
+Description:    Display your GitHub projects
+Version:        0.6.1
+Author:         Francesco Ceccon
+Author URI:     http://francesco-cek.com
+License:        BSD 2-clause
+License URI:    https://raw.github.com/fracek/better-github-widget/master/LICENSE.txt 
+Text Domain:    better-github-widget
+Domain Path:    /languages
  */
-
-$plugin_dir = basename(dirname(__FILE__));
-load_plugin_textdomain( 'better-github-widget', false,
-    dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 /**
  * A better Github widget that displays a list of your most recent
  * active Github projects
  */
 class Better_GitHub_Widget extends WP_Widget {
+    
+    const ID = 'better-github-widget';
+    const NAME = 'Better GitHub Widget';
 
+    protected $loaded_textdomain = false;
+    
     /**
      * PHP 4 constructor
      */
@@ -34,11 +34,12 @@ class Better_GitHub_Widget extends WP_Widget {
      * PHP 5 constructor
      */
     function __construct() {
+        $this->load_plugin_textdomain();
         $widget_ops = array('classname' => 'better-gh-widget',
-            'description' => __('Display your GitHub projects','better-github-widget'));
+            'description' => __( 'Display your GitHub projects', self::ID));
         parent::__construct(
             'better-gh-widget', // Base ID
-            'Better GitHub Widget', // Name
+            __('Better GitHub Widget', self::ID), // Name
             $widget_ops
         );
         add_filter('plugin_row_meta', array(&$this, 'set_plugin_meta'), 10, 2);
@@ -76,7 +77,7 @@ class Better_GitHub_Widget extends WP_Widget {
 
         // the list of repos
         echo '<ul id="gh-repos">';
-        echo '<li id="gh-loading">' . __('Status updating...','better-github-widget') . '</li>';
+        echo '<li id="gh-loading">' . __( 'Status updating...', self::ID) . '</li>';
         echo '</ul>';
         echo '<script src="' . plugins_url('github.js', __FILE__) . '" type="text/javascript"> </script>';
 ?>
@@ -137,41 +138,41 @@ class Better_GitHub_Widget extends WP_Widget {
 
         // Title
         echo '<p><label for="'. $this->get_field_id('title') . '">' .
-            __('Title','better-github-widget') . ':';
+            __( 'Title', self::ID) . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('title') . '" ';
         echo 'name="' . $this->get_field_name('title') . '" type="text" ';
         echo 'value="' . esc_attr($title) . '" title="' .
-            __('Title of the widget as it appears on the page','better-github-widget') . '" />';
+            __( 'Title of the widget as it appears on the page', self::ID) . '" />';
         echo '</label></p>';
 
         // Username
         echo '<p><label for="'. $this->get_field_id('username') . '">' .
-            __('Username','better-github-widget') . ':';
+            __( 'Username', self::ID) . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('username') . '" ';
         echo 'name="' . $this->get_field_name('username') . '" type="text" ';
         echo 'value="' . esc_attr($username) . '" title="' .
-            __('Your Github username','better-github-widget') . '"/>';
+            __( 'Your Github username', self::ID) . '"/>';
         echo '</label></p>';
 
         // Repo Count
         echo '<p><label for="' . $this->get_field_id('count') . '">' .
-            __('Number of projects to show','better-github-widget') . ':';
+            __( 'Number of projects to show', self::ID) . ':';
         echo '<input class="widefat" id="' . $this->get_field_id('count') . '" ';
         echo 'name="' . $this->get_field_name('count') . '" type="number" ';
         echo 'value="' . esc_attr($count) . '" title="0 for all." />';
-        echo '<br><small>' . __('Set to 0 to display all your projects','better-github-widget') . '</small>';
+        echo '<br><small>' . __( 'Set to 0 to display all your projects', self::ID) . '</small>';
         echo '</label></p>';
 
         // Skip Forks
         echo '<p><label for="' . $this->get_field_id('skip_forks') . '">' .
-            __('Show Forked Repositories:','better-github-widget') . ' </label>';
+            __( 'Show Forked Repositories:', self::ID) . ' </label>';
         echo '<input type="checkbox" name="' . $this->get_field_name('skip_forks') .
             '" value="1" ' . $skip_forks_checked . '/>'; 
         echo '</p>';
 
         // Show Octocat
         echo '<p><label for="' . $this->get_field_id('show_octocat') . '">' .
-            __('Show Octocat:','better-github-widget') . ' </label>';
+            __( 'Show Octocat:', self::ID) . ' </label>';
         echo '<input type="checkbox" name="' . $this->get_field_name('show_octocat') .
             '" value="1" ' . $show_octocat_checked . '/>'; 
         echo '</p>';
@@ -183,11 +184,18 @@ class Better_GitHub_Widget extends WP_Widget {
             return array_merge(
                 $links,
                 array(sprintf('<a href="https://github.com/fracek/better-github-widget/issues">%s</a>',
-                    __('Issues on GitHub','better-github-widget')))
+                    __( 'Issues on GitHub', self::ID)))
             );
         }
         return $links;
     }
+    
+    protected function load_plugin_textdomain() {
+		if (!$this->loaded_textdomain) {
+			load_plugin_textdomain(self::ID, false, self::ID . '/languages');
+			$this->loaded_textdomain = true;
+		}
+	}
 } // class Better_GitHub_Widget
 add_action('widgets_init', create_function('', 'register_widget("better_github_widget");'));
 ?>
