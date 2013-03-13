@@ -35,14 +35,17 @@ class Better_GitHub_Widget extends WP_Widget {
      */
     function __construct() {
         $this->load_plugin_textdomain();
-        $widget_ops = array('classname' => 'better-gh-widget',
-            'description' => __( 'Display your GitHub projects', self::ID));
+        $widget_ops = array(
+            'classname' => 'better-gh-widget',
+            'description' => __( 'Display your GitHub projects', self::ID)
+            );
         parent::__construct(
             'better-gh-widget', // Base ID
             __('Better GitHub Widget', self::ID), // Name
             $widget_ops
         );
-        add_filter('plugin_row_meta', array(&$this, 'set_plugin_meta'), 10, 2);
+        add_filter( 'plugin_row_meta', array(&$this, 'set_plugin_meta'), 10, 2);
+        add_action( 'wp_enqueue_scripts', array( &$this, 'load_scripts'));
     }
 
     /**
@@ -79,7 +82,6 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '<ul id="gh-repos">';
         echo '<li id="gh-loading">' . __( 'Status updating...', self::ID) . '</li>';
         echo '</ul>';
-        echo '<script src="' . plugins_url('github.js', __FILE__) . '" type="text/javascript"> </script>';
 ?>
 <script type="text/javascript">
         github.showRepos({
@@ -178,7 +180,7 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '</p>';
     }
 
-    function set_plugin_meta($links, $file) {
+    protected function set_plugin_meta($links, $file) {
         $plugin = plugin_basename(__FILE__);
         if ($file == $plugin) {
             return array_merge(
@@ -191,11 +193,16 @@ class Better_GitHub_Widget extends WP_Widget {
     }
     
     protected function load_plugin_textdomain() {
-		if (!$this->loaded_textdomain) {
-			load_plugin_textdomain(self::ID, false, self::ID . '/languages');
-			$this->loaded_textdomain = true;
-		}
-	}
+            if (!$this->loaded_textdomain) {
+                    load_plugin_textdomain(self::ID, false, self::ID . '/languages');
+                    $this->loaded_textdomain = true;
+            }
+    }
+    
+    function load_scripts() {
+            wp_register_script( 'github-js', plugins_url('js/github-1.0.min.js', __FILE__), array(), '1.0', FALSE );
+            wp_enqueue_script( 'github-js' );
+    }
 } // class Better_GitHub_Widget
 add_action('widgets_init', create_function('', 'register_widget("better_github_widget");'));
 ?>
