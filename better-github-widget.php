@@ -20,6 +20,7 @@ class Better_GitHub_Widget extends WP_Widget {
     
     const ID = 'better-github-widget';
     const NAME = 'Better GitHub Widget';
+    const VERSION = '0.6.2';
 
     protected $loaded_textdomain = false;
     
@@ -205,7 +206,7 @@ class Better_GitHub_Widget extends WP_Widget {
     }
     
     function load_scripts() {
-            wp_register_script( 'github-js', plugins_url('js/github-1.0.min.js', __FILE__), array(), '1.0', FALSE );
+            wp_register_script( 'github-js', plugins_url('js/github-1.0.min.js', __FILE__), array(), self::VERSION, FALSE );
             wp_enqueue_script( 'github-js' );
     }
 } // class Better_GitHub_Widget
