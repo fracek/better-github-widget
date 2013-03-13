@@ -3,7 +3,7 @@
 Plugin Name:    Better GitHub Widget
 Plugin URI:     https://wordpress.org/extend/plugins/better-github-widget/
 Description:    Display your GitHub projects
-Version:        0.6.1
+Version:        0.6.2
 Author:         Francesco Ceccon
 Author URI:     http://francesco-cek.com
 License:        BSD 2-clause
