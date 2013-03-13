@@ -1,7 +1,7 @@
 <?php
 /*
 Plugin Name:    Better GitHub Widget
-Plugin URI:     https://wordpress.org/extend/plugins/better-github-widget/
+Plugin URI:     http://wordpress.org/extend/plugins/better-github-widget/
 Description:    Display your GitHub projects
 Version:        0.6.2
 Author:         Francesco Ceccon
@@ -199,15 +199,15 @@ class Better_GitHub_Widget extends WP_Widget {
     }
     
     protected function load_plugin_textdomain() {
-            if (!$this->loaded_textdomain) {
-                    load_plugin_textdomain(self::ID, false, self::ID . '/languages');
-                    $this->loaded_textdomain = true;
-            }
+        if (!$this->loaded_textdomain) {
+                load_plugin_textdomain(self::ID, false, self::ID . '/languages');
+                $this->loaded_textdomain = true;
+        }
     }
     
     function load_scripts() {
-            wp_register_script( 'github-js', plugins_url('js/github-1.0.min.js', __FILE__), array(), self::VERSION, FALSE );
-            wp_enqueue_script( 'github-js' );
+        wp_register_script( 'github-js', plugins_url('js/github-1.0.min.js', __FILE__), array(), self::VERSION, FALSE );
+        wp_enqueue_script( 'github-js' );
     }
 } // class Better_GitHub_Widget
 add_action('widgets_init', create_function('', 'register_widget("better_github_widget");'));
