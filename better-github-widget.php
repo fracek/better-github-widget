@@ -45,7 +45,11 @@ class Better_GitHub_Widget extends WP_Widget {
             $widget_ops
         );
         add_filter( 'plugin_row_meta', array(&$this, 'set_plugin_meta'), 10, 2);
-        add_action( 'wp_enqueue_scripts', array( &$this, 'load_scripts'));
+        // TODO: load only if widget is present on current page !
+        // if (  ) { 
+                add_action( 'wp_enqueue_scripts', array( &$this, 'load_scripts'));    
+        // }
+        
     }
 
     /**
