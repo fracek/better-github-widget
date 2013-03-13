@@ -93,7 +93,7 @@ class Better_GitHub_Widget extends WP_Widget {
             count: <?php echo $count; ?>,
             skip_forks: <?php echo $skip_forks; ?>,
         });
-  </script>
+</script>
 <?php
         echo $after_widget;
     }
@@ -131,6 +131,7 @@ class Better_GitHub_Widget extends WP_Widget {
             'username' => '',
             'count' => '0',
             'title' => 'GitHub',
+            'skip_forks' => 'true',
             'show_octocat' => 'true'
         );
         $instance = wp_parse_args( (array) $instance, $defaults);
@@ -184,7 +185,7 @@ class Better_GitHub_Widget extends WP_Widget {
         echo '</p>';
     }
 
-    protected function set_plugin_meta($links, $file) {
+    function set_plugin_meta($links, $file) {
         $plugin = plugin_basename(__FILE__);
         if ($file == $plugin) {
             return array_merge(
