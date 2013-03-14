@@ -1,3 +1,5 @@
+// Package: Better GitHub Widget (https://wordpress.org/extend/plugins/better-github-widget/)
+// File: github.js; Version: 1.0; License: BSD 2-clause (https://raw.github.com/fracek/better-github-widget/master/LICENSE.txt)
 var github = (function(){
   function render(repos){
     var i = 0, fragment = '';
