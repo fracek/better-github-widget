@@ -1,16 +1,16 @@
 <?php
 /*
-Plugin Name:    Better GitHub Widget
-Plugin URI:     http://wordpress.org/extend/plugins/better-github-widget/
-Description:    Display your GitHub projects
-Version:        0.6.2
-Author:         Francesco Ceccon
-Author URI:     http://francesco-cek.com
-License:        BSD 2-clause
-License URI:    https://raw.github.com/fracek/better-github-widget/master/LICENSE.txt 
-Text Domain:    better-github-widget
-Domain Path:    /languages
- */
+Plugin Name: Better GitHub Widget
+Plugin URI: http://wordpress.org/extend/plugins/better-github-widget/
+Description: Display your GitHub projects
+Version: 0.6.2
+Author: Francesco Ceccon
+Author URI: http://francesco-cek.com
+License: BSD 2-clause
+License URI: https://raw.github.com/fracek/better-github-widget/master/LICENSE.txt 
+Text Domain: better-github-widget
+Domain Path: /languages
+*/
 
 /**
  * A better Github widget that displays a list of your most recent
